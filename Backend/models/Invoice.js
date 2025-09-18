@@ -19,6 +19,13 @@ class InvoiceModel {
             dueDate TEXT,
             currency TEXT DEFAULT 'USD',
             status TEXT DEFAULT 'Pending',
+            tax DECIMAL(10,2) DEFAULT 0,
+            discount DECIMAL(10,2) DEFAULT 0,
+            subtotal DECIMAL(10,2) DEFAULT 0,
+            total DECIMAL(10,2) DEFAULT 0,
+            paymentMethod TEXT DEFAULT 'N/A',
+            notes TEXT,
+            createdBy TEXT,
             createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
         )`);
     }
@@ -26,10 +33,11 @@ class InvoiceModel {
     async create(invoice) {
         return new Promise((resolve, reject) => {
             const sql = `INSERT INTO invoices (
-                invoiceNumber, clientName, clientEmail, amount, 
-                description, invoiceDate, dueDate, currency
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
-
+                invoiceNumber, clientName, clientEmail, amount,
+                description, invoiceDate, dueDate, currency,
+                status, tax, discount, subtotal, total, paymentMethod, notes, createdBy
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    
             this.db.run(sql, [
                 invoice.invoiceNumber,
                 invoice.clientName,
@@ -38,7 +46,15 @@ class InvoiceModel {
                 invoice.description,
                 invoice.invoiceDate,
                 invoice.dueDate,
-                invoice.currency || 'USD'
+                invoice.currency || 'USD',
+                invoice.status || 'Pending',
+                invoice.tax || 0,
+                invoice.discount || 0,
+                invoice.subtotal || 0,
+                invoice.total || 0,
+                invoice.paymentMethod || 'N/A',
+                invoice.notes || '',
+                invoice.createdBy || 'N/A'
             ], function(err) {
                 if (err) reject(err);
                 else resolve({ id: this.lastID, ...invoice });

@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", async () => {
   const detailsDiv = document.getElementById("invoiceDetails");
-  const statusDiv = document.getElementById("status");
 
   // Get invoice ID from URL
   const params = new URLSearchParams(window.location.search);
@@ -31,16 +30,24 @@ document.addEventListener("DOMContentLoaded", async () => {
       throw new Error('No invoice data received');
     }
 
+    // Render all fields
     detailsDiv.innerHTML = `
       <p><strong>Invoice Number:</strong> ${invoice.invoiceNumber || 'N/A'}</p>
-      <p><strong>Client:</strong> ${invoice.clientName || 'N/A'}</p>
-      <p><strong>Email:</strong> ${invoice.clientEmail || 'N/A'}</p>
-      <p><strong>Date:</strong> ${invoice.invoiceDate ? new Date(invoice.invoiceDate).toLocaleDateString() : 'N/A'}</p>
+      <p><strong>Client Name:</strong> ${invoice.clientName || 'N/A'}</p>
+      <p><strong>Client Email:</strong> ${invoice.clientEmail || 'N/A'}</p>
+      <p><strong>Invoice Date:</strong> ${invoice.invoiceDate ? new Date(invoice.invoiceDate).toLocaleDateString() : 'N/A'}</p>
       <p><strong>Due Date:</strong> ${invoice.dueDate ? new Date(invoice.dueDate).toLocaleDateString() : 'N/A'}</p>
       <p><strong>Amount:</strong> ${invoice.currency || ''} ${invoice.amount || 'N/A'}</p>
       <p><strong>Status:</strong> ${invoice.status || 'Pending'}</p>
-      <p><strong>Description:</strong></p>
-      <p>${invoice.description || 'No description provided'}</p>
+      <p><strong>Description:</strong> ${invoice.description || 'No description provided'}</p>
+      <p><strong>Tax:</strong> ${invoice.tax || 0}</p>
+      <p><strong>Discount:</strong> ${invoice.discount || 0}</p>
+      <p><strong>Subtotal:</strong> ${invoice.subtotal || 0}</p>
+      <p><strong>Total:</strong> ${invoice.total || 0}</p>
+      <p><strong>Payment Method:</strong> ${invoice.paymentMethod || 'N/A'}</p>
+      <p><strong>Notes:</strong> ${invoice.notes || 'None'}</p>
+      <p><strong>Created By:</strong> ${invoice.createdBy || 'N/A'}</p>
+      <p><strong>Created At:</strong> ${invoice.createdAt ? new Date(invoice.createdAt).toLocaleString() : 'N/A'}</p>
     `;
   } catch (err) {
     console.error("Failed to fetch invoice details:", err);
