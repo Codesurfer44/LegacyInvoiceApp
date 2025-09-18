@@ -1,7 +1,5 @@
 document.addEventListener("DOMContentLoaded", async () => {
   const detailsDiv = document.getElementById("invoiceDetails");
-
-  // Get invoice ID from URL
   const params = new URLSearchParams(window.location.search);
   const invoiceId = params.get('id');
 
@@ -11,35 +9,24 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   try {
-    console.log("Fetching invoice details for ID:", invoiceId);
     const response = await fetch(`http://localhost:3000/api/invoices/${invoiceId}`);
-    
     if (response.status === 404) {
       detailsDiv.innerHTML = '<p class="error">Invoice not found. It may have been deleted.</p>';
       return;
     }
-    
-    if (!response.ok) {
-      throw new Error(`Server error: ${response.status}`);
-    }
-    
+    if (!response.ok) throw new Error(`Server error: ${response.status}`);
+
     const invoice = await response.json();
-    console.log("Received invoice data:", invoice);
 
-    if (!invoice) {
-      throw new Error('No invoice data received');
-    }
-
-    // Render all fields
     detailsDiv.innerHTML = `
       <p><strong>Invoice Number:</strong> ${invoice.invoiceNumber || 'N/A'}</p>
       <p><strong>Client Name:</strong> ${invoice.clientName || 'N/A'}</p>
       <p><strong>Client Email:</strong> ${invoice.clientEmail || 'N/A'}</p>
       <p><strong>Invoice Date:</strong> ${invoice.invoiceDate ? new Date(invoice.invoiceDate).toLocaleDateString() : 'N/A'}</p>
       <p><strong>Due Date:</strong> ${invoice.dueDate ? new Date(invoice.dueDate).toLocaleDateString() : 'N/A'}</p>
-      <p><strong>Amount:</strong> ${invoice.currency || ''} ${invoice.amount || 'N/A'}</p>
+      <p><strong>Amount:</strong> ${invoice.currency || ''} ${invoice.amount || 0}</p>
       <p><strong>Status:</strong> ${invoice.status || 'Pending'}</p>
-      <p><strong>Description:</strong> ${invoice.description || 'No description provided'}</p>
+      <p><strong>Description:</strong> ${invoice.description || 'None'}</p>
       <p><strong>Tax:</strong> ${invoice.tax || 0}</p>
       <p><strong>Discount:</strong> ${invoice.discount || 0}</p>
       <p><strong>Subtotal:</strong> ${invoice.subtotal || 0}</p>

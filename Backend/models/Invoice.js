@@ -37,7 +37,7 @@ class InvoiceModel {
                 description, invoiceDate, dueDate, currency,
                 status, tax, discount, subtotal, total, paymentMethod, notes, createdBy
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-    
+
             this.db.run(sql, [
                 invoice.invoiceNumber,
                 invoice.clientName,
@@ -82,27 +82,19 @@ class InvoiceModel {
 
     async getByNumber(invoiceNumber) {
         return new Promise((resolve, reject) => {
-            this.db.get(
-                'SELECT * FROM invoices WHERE invoiceNumber = ?',
-                [invoiceNumber],
-                (err, row) => {
-                    if (err) reject(err);
-                    else resolve(row);
-                }
-            );
+            this.db.get('SELECT * FROM invoices WHERE invoiceNumber = ?', [invoiceNumber], (err, row) => {
+                if (err) reject(err);
+                else resolve(row);
+            });
         });
     }
 
     async getLastNumber() {
         return new Promise((resolve, reject) => {
-            this.db.get(
-                'SELECT MAX(CAST(invoiceNumber AS INTEGER)) as lastNumber FROM invoices',
-                [],
-                (err, row) => {
-                    if (err) reject(err);
-                    else resolve(row && row.lastNumber ? row.lastNumber : 0);
-                }
-            );
+            this.db.get('SELECT MAX(CAST(invoiceNumber AS INTEGER)) as lastNumber FROM invoices', [], (err, row) => {
+                if (err) reject(err);
+                else resolve(row && row.lastNumber ? row.lastNumber : 0);
+            });
         });
     }
 
