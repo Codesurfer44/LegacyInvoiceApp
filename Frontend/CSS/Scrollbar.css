@@ -1,0 +1,28 @@
+/* Scrollbar styling for cyberpunk theme only for .terminal */
+
+/* Webkit browsers (Chrome, Edge, Safari) */
+.terminal::-webkit-scrollbar {
+    width: 12px;
+  }
+  
+  .terminal::-webkit-scrollbar-track {
+    background: #1a1a25;
+    border-radius: 8px;
+  }
+  
+  .terminal::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #ff33ff, #39ff14);
+    border-radius: 8px;
+    border: 2px solid #1a1a25;
+  }
+  
+  .terminal::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #39ff14, #ff33ff);
+  }
+  
+  /* Firefox only for .terminal */
+  .terminal {
+    scrollbar-width: thin;
+    scrollbar-color: #ff33ff #1a1a25;
+  }
+  

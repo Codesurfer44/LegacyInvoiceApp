@@ -1,0 +1,188 @@
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #1a1a25;
+  color: #39ff14;
+  font-family: 'Share Tech Mono', monospace;
+  padding-top: 0;  /* Remove top padding */
+}
+
+label {
+  display: block;
+  margin: 0.3rem 0 0.1rem;
+  font-size: 0.9rem;
+  color: #39ff14;
+}
+
+.terminal {
+  margin-right: 270px;
+  background: rgba(0,0,0,0.95);
+  border: 2px solid #ff33ff;
+  padding: 1.5rem;  /* Reduced padding */
+  width: 600px;
+  box-shadow: 0 0 15px #ff33ff, 0 0 25px #39ff14;
+  border-radius: 8px;
+  height: calc(100vh - 100px); /* Set fixed height based on viewport */
+  overflow-y: auto;
+  margin-top: 20px; /* Reduced top margin */
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 600px;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  padding: 1.5rem 1rem; /* Adjust horizontal padding */
+  box-sizing: border-box; /* Include padding in width calculation */
+}
+
+input, textarea, select {
+  width: 100%;
+  padding: 0.7rem;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 1rem;
+  background: #1a1a25;
+  border: 1px solid #39ff14;
+  color: #39ff14;
+  margin-bottom: 0.5rem;
+  outline: none;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+textarea {
+  resize: vertical;
+  height: 80px;
+}
+
+h1 {
+  position: sticky;
+  top: 0;
+  background: rgba(0,0,0,0.95); /* Match terminal background */
+  padding: 1rem 0;
+  margin: 0 0 1.5rem 0;
+  z-index: 10;
+
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: #ff33ff;
+  text-shadow: 0 0 8px #ff33ff;
+  text-align: center;
+}
+
+#invoiceForm {
+  overflow-y: auto;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  width: 100%; /* Ensure form takes full width of terminal */
+  padding-right: 5px; /* Small padding for scrollbar */
+  box-sizing: border-box;
+}
+
+button {
+  width: 100%;
+  padding: 0.8rem;
+  background: #ff33ff;
+  border: none;
+  color: #1a1a25;
+  font-family: 'Share Tech Mono', monospace;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1rem;
+  border-radius: 4px;
+  transition: all 0.2s ease-in-out;
+}
+
+button:hover {
+  background: #39ff14;
+  color: #1a1a25;
+  box-shadow: 0 0 10px #ff33ff, 0 0 10px #39ff14;
+}
+
+#status {
+  margin-top: 1rem;
+  font-size: 1rem;
+  min-height: 1.4rem;
+  text-align: center;
+  color: #39ff14;
+  text-shadow: 0 0 5px #39ff14;
+}
+
+.detailsBtn {
+  display: inline-block;        
+  text-decoration: none;        
+  padding: 5px 10px;            
+  font-size: 0.85rem;
+  font-family: 'Share Tech Mono', monospace; 
+  font-weight: bold;             /* <-- Add this */
+  background: #F5E100;
+  color: #1a1a25;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  text-align: center;           
+}
+
+.detailsBtn:hover {
+  background: #39ff14;
+  color: #1a1a25;
+  box-shadow: 0 0 5px #ff33ff, 0 0 5px #39ff14;
+}
+
+.deleteBtn {
+  padding: 5px 10px;
+  font-size: 0.85rem;
+  font-family: 'Share Tech Mono', monospace;
+  font-weight: bold;
+  background: #ff3333;
+  color: #1a1a25;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 5px;
+  transition: all 0.2s ease-in-out;
+}
+
+.deleteBtn:hover {
+  background: #ff0000;
+  color: #fff;
+  box-shadow: 0 0 5px #ff33ff, 0 0 5px #ff3333;
+}
+
+.header-container {
+  position: fixed;
+  top: 0;
+  right: 0; /* Changed from left: 0 */
+  width: 250px; /* Set fixed width for sidebar */
+  height: 100vh; /* Full height */
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  padding: 15px;
+  background: rgba(26, 26, 37, 0.95);
+  border-left: 2px solid #ff33ff; /* Changed from border-bottom */
+  box-shadow: -2px 0 10px rgba(255, 51, 255, 0.3);
+  z-index: 1000;
+}
+
+.back-link {
+  width: 100%; /* Take full width of container */
+  padding: 10px 15px;
+  background: #ff33ff;
+  color: #1a1a25;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: bold;
+  transition: 0.2s;
+  text-align: center;
+}
+
+.back-link:hover {
+  background: #39ff14;
+  color: #1a1a25;
+  box-shadow: 0 0 10px #ff33ff, 0 0 10px #39ff14;
+}
+

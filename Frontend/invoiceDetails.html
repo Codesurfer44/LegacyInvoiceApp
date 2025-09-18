@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invoice Details</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/scrollbar.css">
+  <link rel="stylesheet" href="css/utilities.css">
+  <link rel="stylesheet" href="css/statusStyles.css">
+  <style>
+    body { padding: 20px; background: #1a1a25; color: #39ff14; font-family: 'Share Tech Mono', monospace; }
+    h1 { text-align: center; color: #ff33ff; text-shadow: 0 0 8px #ff33ff; }
+    .invoice-details { max-width: 700px; margin: 0 auto; background: rgba(0,0,0,0.9); padding: 20px; border: 2px solid #ff33ff; box-shadow: 0 0 10px #39ff14; border-radius: 8px; }
+    .invoice-details p { margin: 5px 0; }
+    .back-link { display: inline-block; margin-top: 15px; padding: 10px 15px; background: #ff33ff; color: #1a1a25; text-decoration: none; border-radius: 4px; font-weight: bold; transition: 0.2s; }
+    .back-link:hover { background: #39ff14; color: #1a1a25; box-shadow: 0 0 10px #ff33ff, 0 0 10px #39ff14; }
+  </style>
+</head>
+<body>
+  <h1>Invoice Details</h1>
+  <div class="invoice-details" id="invoiceDetails">
+    Loading...
+  </div>
+  <a href="invoiceDatabase.html" class="back-link">← Back to Invoice Database</a>
+
+  <script src="js/invoiceDetails.js"></script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+.status {
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 4px;
+    display: inline-block;
+  }
+  
+  /* Existing statuses */
+  .status.Pending {
+    background-color: orange;
+    color: #1a1a25;
+  }
+  
+  .status.Sent {
+    background-color: #39ff14;
+    color: #1a1a25;
+  }
+  
+  /* Future statuses can be added easily 
+  
+  .status.Cancelled {
+    background-color: red;
+    color: #1a1a25;
+  }
+  
+  .status.Overdue {
+    background-color: #ff33ff;
+    color: #1a1a25;
+  }
+  
+  */

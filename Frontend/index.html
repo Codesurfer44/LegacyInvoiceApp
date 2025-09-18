@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LegacyInvoiceApp - Create Invoice</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/scrollbar.css">
+  <link rel="stylesheet" href="css/utilities.css">
+  <script src="js/form.js" defer></script>
+</head>
+<body>
+
+  <div class="header-container">
+    <a href="invoiceDatabase.html" class="back-link">📑 Invoice Database</a>
+  </div>
+
+  <div class="terminal">
+    <h1>Invoice Terminal</h1>
+    <form id="invoiceForm">
+
+      <!-- Invoice Info -->
+      <label for="invoiceNumber">Invoice Number</label>
+      <input type="text" id="invoiceNumber" name="invoiceNumber" required>
+
+      <label for="invoiceDate">Invoice Date</label>
+      <input type="date" id="invoiceDate" name="invoiceDate" required>
+
+      <label for="dueDate">Due Date</label>
+      <input type="date" id="dueDate" name="dueDate" required>
+
+      <label for="currency">Currency</label>
+      <select id="currency" name="currency" required>
+        <option value="USD">USD ($)</option>
+        <option value="EUR">EUR (€)</option>
+        <option value="GBP">GBP (£)</option>
+      </select>
+
+      <!-- Client Info -->
+      <label for="clientName">Client Name</label>
+      <input type="text" id="clientName" name="clientName" required>
+
+      <label for="clientCompany">Client Company</label>
+      <input type="text" id="clientCompany" name="clientCompany">
+
+      <label for="clientEmail">Client Email</label>
+      <input type="email" id="clientEmail" name="clientEmail" required>
+
+      <label for="clientPhone">Client Phone</label>
+      <input type="text" id="clientPhone" name="clientPhone">
+
+      <label for="clientAddress">Client Address</label>
+      <textarea id="clientAddress" name="clientAddress"></textarea>
+
+      <!-- Invoice Details -->
+      <label for="description">Description</label>
+      <textarea id="description" name="description" required></textarea>
+
+      <label for="amount">Amount</label>
+      <input type="number" step="0.01" id="amount" name="amount" required>
+
+      <label for="taxRate">Tax Rate (%)</label>
+      <input type="number" step="0.01" id="taxRate" name="taxRate" value="0">
+
+      <label for="discount">Discount (%)</label>
+      <input type="number" step="0.01" id="discount" name="discount" value="0">
+
+      <!-- Payment Info -->
+      <label for="paymentTerms">Payment Terms</label>
+      <input type="text" id="paymentTerms" name="paymentTerms" placeholder="e.g., Net 30">
+
+      <label for="paymentMethod">Payment Method</label>
+      <select id="paymentMethod" name="paymentMethod">
+        <option value="Bank Transfer">Bank Transfer</option>
+        <option value="Credit Card">Credit Card</option>
+        <option value="PayPal">PayPal</option>
+      </select>
+
+      <label for="notes">Notes</label>
+      <textarea id="notes" name="notes" placeholder="Optional notes or instructions"></textarea>
+
+      <button type="button" id="saveBtn">Save Invoice</button>
+
+    </form>
+    <p id="status"></p>
+  </div>
+</body>
+</html>

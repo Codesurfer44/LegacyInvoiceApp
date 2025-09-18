@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>View Invoices</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/scrollbar.css">
+  <link rel="stylesheet" href="css/utilities.css">
+  <style>
+    body {
+      background: #1a1a25;
+      color: #39ff14;
+      font-family: 'Share Tech Mono', monospace;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #ff33ff;
+      text-shadow: 0 0 8px #ff33ff;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background: rgba(0, 0, 0, 0.9);
+      border: 2px solid #ff33ff;
+      box-shadow: 0 0 10px #39ff14;
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid #39ff14;
+      text-align: left;
+    }
+
+    th {
+      background: #2a2a38;
+      color: #ff33ff;
+    }
+
+    tr:hover {
+      background: rgba(57, 255, 20, 0.1);
+    }
+  </style>
+</head>
+<body>
+  <h1>Invoice Database</h1>
+
+  <table id="invoicesTable">
+    <thead>
+      <tr>
+        <th>Invoice #</th>
+        <th>Client</th>
+        <th>Date</th>
+        <th>Total</th>
+        <th>Status</th>
+        <th>Triggers</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Data will be inserted by JS -->
+    </tbody>
+  </table>
+
+  <a href="index.html" class="back-link">← Back to Invoice Terminal</a>
+
+  <script src="js/invoiceDatabase.js"></script>
+</body>
+</html>
