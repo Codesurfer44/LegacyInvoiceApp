@@ -20,6 +20,12 @@ const invoiceSchema = Joi.object({
   paymentMethod: Joi.string().optional(),
   notes: Joi.string().optional(),
   createdBy: Joi.string().optional(),
+
+  invoiceDate: Joi.date().optional(),
+  clientCompany: Joi.string().allow('').optional(),
+  clientPhone: Joi.string().allow('').optional(),
+  clientAddress: Joi.string().allow('').optional(),
+  paymentTerms: Joi.string().allow('').optional()
 });
 
 const validateInvoice = (req, res, next) => {
