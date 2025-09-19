@@ -1,27 +1,18 @@
-const express = require('express');
-const cors = require('cors');
-const path = require('path');
-const invoiceRoutes = require('./routes/invoices');
+// server.js
 
-const app = express();
+const app = require('./app');
+const mongoose = require('mongoose');
 
-// Middleware
-app.use(cors());
-app.use(express.json());
+const PORT = process.env.PORT || 5000;
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/invoiceApp';
 
-// Routes
-app.use('/api/invoices', invoiceRoutes);
-
-// Serve frontend (optional: if you want backend to also serve your HTML/JS)
-app.use(express.static(path.join(__dirname, '../Frontend')));
-
-// Error handler
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).json({ error: 'Server error', message: err.message });
-});
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`🚀 Server running at http://localhost:${PORT}`);
+// Connect to MongoDB
+mongoose.connect(MONGO_URI)
+.then(() => {
+  console.log('MongoDB connected');
+  // Start server
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+})
+.catch((err) => {
+  console.error('MongoDB connection error:', err);
 });
