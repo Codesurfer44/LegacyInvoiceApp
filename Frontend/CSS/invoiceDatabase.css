@@ -1,0 +1,33 @@
+/* Status message */
+#statusMessage {
+  text-align: center;
+  margin-top: 10px;
+  color: #ff3333;
+  font-size: 1rem;
+}
+
+/* Table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background: rgba(0,0,0,0.9);
+  border: 2px solid #ff33ff;
+  border-radius: var(--cyber-border-radius);
+  box-shadow: var(--cyber-shadow);
+}
+
+th, td {
+  padding: 10px;
+  border: 1px solid #39ff14;
+  text-align: left;
+}
+
+th {
+  background: #2a2a38;
+  color: #ff33ff;
+}
+
+tr:hover {
+  background: rgba(57,255,20,0.15);
+}

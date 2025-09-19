@@ -1,98 +1,95 @@
-document.addEventListener("DOMContentLoaded", async () => {
-  const form = document.getElementById("invoiceForm");
-  const saveBtn = document.getElementById("saveBtn");
-  const invoiceNumberInput = document.getElementById("invoiceNumber");
-  const statusDiv = document.getElementById("status");
+const invoiceNumber = document.getElementById("invoiceNumber");
+const invoiceDate = document.getElementById("invoiceDate");
+const dueDate = document.getElementById("dueDate");
+const currency = document.getElementById("currency");
+const clientName = document.getElementById("clientName");
+const clientCompany = document.getElementById("clientCompany");
+const clientEmail = document.getElementById("clientEmail");
+const clientPhone = document.getElementById("clientPhone");
+const clientAddress = document.getElementById("clientAddress");
+const description = document.getElementById("description");
+const amount = document.getElementById("amount");
+const taxRate = document.getElementById("taxRate");
+const discount = document.getElementById("discount");
+const subtotal = document.getElementById("subtotal");
+const total = document.getElementById("total");
+const paymentTerms = document.getElementById("paymentTerms");
+const paymentMethod = document.getElementById("paymentMethod");
+const notes = document.getElementById("notes");
+const saveBtn = document.getElementById("saveBtn");
 
-  // Financial fields
-  const amountInput = document.getElementById("amount");
-  const taxInput = document.getElementById("taxRate");
-  const discountInput = document.getElementById("discount");
-  const subtotalInput = document.getElementById("subtotal");
-  const totalInput = document.getElementById("total");
+// Debug: check if any are null
+console.log({
+  invoiceNumber, invoiceDate, dueDate, currency,
+  clientName, clientCompany, clientEmail, clientPhone, clientAddress,
+  description, amount, taxRate, discount, subtotal, total,
+  paymentTerms, paymentMethod, notes, saveBtn
+});
 
-  // Format invoice numbers consistently
-  const formatInvoiceNumber = (num) => String(num).padStart(4, '0');
 
-  // Load last invoice number
-  async function loadLastInvoiceNumber() {
-    try {
-      const res = await fetch("http://localhost:3000/api/invoices/last-number");
-      if (!res.ok) throw new Error(`Server returned ${res.status}`);
-      const data = await res.json();
-      const lastNum = data?.lastNumber ? parseInt(data.lastNumber.toString().replace(/^0+/, ''), 10) : 0;
-      invoiceNumberInput.value = formatInvoiceNumber(lastNum + 1);
-    } catch (err) {
-      console.error("Failed to fetch last invoice number:", err);
-      invoiceNumberInput.value = "0001";
-    }
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('invoiceForm');
+  const saveBtn = document.getElementById('saveInvoice');
+
+  if (!form || !saveBtn) {
+    console.error("Form or Save button not found in the DOM");
+    return;
   }
 
-  await loadLastInvoiceNumber();
-
-  // --- Listener to dynamically calculate subtotal and total ---
-  form.addEventListener("input", () => {
-    const amount = parseFloat(amountInput.value) || 0;
-    const discount = parseFloat(discountInput.value) || 0;
-    const taxRate = parseFloat(taxInput.value) || 0;
-
-    const subtotal = Math.max(amount - discount, 0);
-    const taxAmount = subtotal * (taxRate / 100);
-    const total = subtotal + taxAmount;
-
-    subtotalInput.value = subtotal.toFixed(2);
-    totalInput.value = total.toFixed(2);
-  });
-
-  // --- Handle save ---
-  saveBtn.addEventListener("click", async (e) => {
+  saveBtn.addEventListener('click', async (e) => {
     e.preventDefault();
 
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
+    // Build invoice object from form inputs
+    const items = [];
+    document.querySelectorAll('.invoice-item').forEach(itemRow => {
+      const description = itemRow.querySelector('.item-description').value.trim();
+      const quantity = parseFloat(itemRow.querySelector('.item-quantity').value);
+      const price = parseFloat(itemRow.querySelector('.item-price').value);
 
-    const amount = parseFloat(data.amount) || 0;
-    const discount = parseFloat(data.discount) || 0;
-    const taxRate = parseFloat(data.taxRate) || 0;
-    const subtotal = Math.max(amount - discount, 0);
-    const total = subtotal + (subtotal * (taxRate / 100));
+      if (description && quantity && price >= 0) {
+        items.push({ description, quantity, price });
+      }
+    });
+
+    const invoice = {
+      invoiceNumber: document.getElementById('invoiceNumber').value.trim(),
+      clientName: document.getElementById('clientName').value.trim(),
+      clientEmail: document.getElementById('clientEmail').value.trim(),
+      items, // make sure items is an array of {description, quantity, price}
+      tax: parseFloat(document.getElementById('taxRate').value) || 0,
+      discount: parseFloat(document.getElementById('discount').value) || 0,
+      status: document.getElementById('status')?.value || 'Pending', // optional
+      currency: document.getElementById('currency').value || 'USD',
+      dueDate: document.getElementById('dueDate').value || null,
+      paymentMethod: document.getElementById('paymentMethod').value || 'N/A',
+      notes: document.getElementById('notes').value || '',
+      createdBy: document.getElementById('createdBy')?.value || 'N/A'
+    };
+
+
+    console.log("REQ BODY:", invoice);
 
     try {
-      const response = await fetch("http://localhost:3000/api/invoices", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...data,
-          invoiceNumber: data.invoiceNumber.padStart(4, '0'),
-          amount,
-          discount,
-          tax: taxRate,
-          subtotal,
-          total
-        })
+      const res = await fetch('http://localhost:5000/api/invoices', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(invoice)
       });
 
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      if (!res.ok) {
+        const errData = await res.json();
+        console.error("Save failed:", errData);
+        alert('Save failed: ' + (errData.errors || errData.message || 'Unknown error'));
+        return;
+      }
 
-      const result = await response.json();
-      console.log("Save result:", result);
-
-      statusDiv.textContent = `✅ Invoice ${result.invoice.invoiceNumber} saved`;
-      statusDiv.style.color = "#39ff14";
-
-      // Increment invoice number for next entry
-      const nextNum = parseInt(data.invoiceNumber, 10) + 1;
-      invoiceNumberInput.value = formatInvoiceNumber(nextNum);
-
+      const data = await res.json();
+      console.log("Invoice saved:", data);
+      alert('Invoice saved successfully!');
       form.reset();
-      invoiceNumberInput.value = formatInvoiceNumber(nextNum);
-      subtotalInput.value = "0.00";
-      totalInput.value = "0.00";
-
     } catch (err) {
-      console.error("Save failed:", err);
-      statusDiv.textContent = "❌ Failed to save invoice";
-      statusDiv.style.color = "#ff3333";
+      console.error("Fetch error:", err);
+      alert('Save failed: Check console for details.');
     }
   });
 });

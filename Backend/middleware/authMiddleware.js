@@ -1,7 +1,5 @@
-// middleware/authMiddleware.js
-
+// Backend/middleware/authMiddleware.js
 exports.authenticate = (req, res, next) => {
-  // Dummy authentication for now
-  // You can implement JWT later
+  // Dummy authentication, can replace with JWT later
   next();
 };

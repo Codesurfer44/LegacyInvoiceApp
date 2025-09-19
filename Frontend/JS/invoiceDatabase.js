@@ -1,61 +1,66 @@
+// Frontend/js/invoiceDatabase.js
+
 document.addEventListener("DOMContentLoaded", async () => {
-  const tableBody = document.querySelector("#invoicesTable tbody");
+  const invoiceTableBody = document.querySelector("#invoiceTable tbody");
+  const statusMessage = document.getElementById("statusMessage");
 
-  try {
-    const response = await fetch("http://localhost:3000/api/invoices");
-    const invoices = await response.json();
+  // Load invoices
+  const loadInvoices = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/api/invoices");
+      if (!res.ok) throw new Error("Failed to fetch invoices");
 
-    tableBody.innerHTML = "";
+      const data = await res.json();
+      const invoices = data.data || [];
 
-    if (!invoices.length) {
-      tableBody.innerHTML = `<tr><td colspan="6">No invoices found</td></tr>`;
-      return;
-    }
+      invoiceTableBody.innerHTML = "";
+      if (invoices.length === 0) {
+        statusMessage.textContent = "No invoices found.";
+        return;
+      }
 
-    invoices.forEach(inv => {
-      const row = document.createElement("tr");
-
-      row.innerHTML = `
-        <td>${inv.invoiceNumber}</td>
-        <td>${inv.clientName}</td>
-        <td>${inv.invoiceDate ? new Date(inv.invoiceDate).toLocaleDateString() : 'N/A'}</td>
-        <td>${inv.currency || ''} ${inv.amount}</td>
-        <td>${inv.status}</td>
-        <td>
-          <a href="invoiceDetails.html?id=${inv.id}" class="detailsBtn">View Details</a>
-          <button class="deleteBtn" data-id="${inv.id}">Delete</button>
-        </td>
-      `;
-
-      tableBody.appendChild(row);
-    });
-
-    // Attach delete handlers
-    document.querySelectorAll('.deleteBtn').forEach(btn => {
-      btn.addEventListener('click', async (e) => {
-        const id = e.target.dataset.id;
-        if (!confirm('Are you sure you want to delete this invoice?')) return;
-
-        try {
-          const res = await fetch(`http://localhost:3000/api/invoices/${id}`, {
-            method: 'DELETE'
-          });
-          const result = await res.json();
-          if (res.ok) {
-            alert('✅ Invoice deleted');
-            e.target.closest('tr').remove(); // Remove row from table
-          } else {
-            alert('❌ ' + (result.error || 'Failed to delete invoice'));
-          }
-        } catch (err) {
-          console.error(err);
-          alert('⚠️ Network error');
-        }
+      invoices.forEach(inv => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${inv.invoiceNumber}</td>
+          <td>${inv.clientName}</td>
+          <td>${inv.clientEmail}</td>
+          <td>${inv.total}</td>
+          <td>${inv.status}</td>
+          <td>
+            <a class="orangeBtn" href="invoiceDetails.html?id=${inv._id}">View Details</a>
+            <a class="redBtn" href="#" onclick="deleteInvoice('${inv._id}')">Delete</a>
+          </td>
+        `;
+        invoiceTableBody.appendChild(row);
       });
-    });
+      statusMessage.textContent = "";
+    } catch (err) {
+      console.error("Error loading invoices:", err);
+      statusMessage.textContent = "Error loading invoices.";
+    }
+  };
 
-  } catch (err) {
-    console.error("Failed to fetch invoices:", err);
-    tableBody.innerHTML = `<tr><td colspan="6">Error loading invoices</td></tr>`;
-  }
+  // Delete invoice
+  window.deleteInvoice = async (id) => {
+    if (!confirm("Are you sure you want to delete this invoice?")) return;
+    try {
+      const res = await fetch(`http://localhost:5000/api/invoices/${id}`, {
+        method: "DELETE",
+      });
+      const result = await res.json();
+      if (result.success) {
+        alert("Invoice deleted successfully");
+        loadInvoices();
+      } else {
+        alert("Failed to delete invoice: " + result.message);
+      }
+    } catch (err) {
+      console.error("Failed to delete invoice:", err);
+      alert("Error deleting invoice");
+    }
+  };
+
+  // Initial load
+  loadInvoices();
 });

@@ -1,0 +1,27 @@
+body {
+    padding: 20px;
+    background: #1a1a25;
+    color: #39ff14;
+    font-family: 'Share Tech Mono', monospace;
+}
+h1 {
+    text-align: center;
+    color: #ff33ff;
+    text-shadow: 0 0 8px #ff33ff;
+}
+.invoice-details {
+    max-width: 700px;
+    margin: 0 auto;
+    background: rgba(0,0,0,0.9);
+    padding: 20px;
+    border: 2px solid #ff33ff;
+    box-shadow: var(--cyber-shadow);
+    border-radius: var(--cyber-border-radius);
+}
+.invoice-details p {
+    margin: 5px 0;
+}
+
+.invoice-field {
+    font-weight: bold;
+}
