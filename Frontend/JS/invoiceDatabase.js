@@ -21,12 +21,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       invoices.forEach(inv => {
         const row = document.createElement("tr");
+        const statusSpan = `<span class="status ${inv.status}">${inv.status}</span>`;
         row.innerHTML = `
           <td>${inv.invoiceNumber}</td>
           <td>${inv.clientName}</td>
           <td>${inv.clientEmail}</td>
           <td>${inv.total}</td>
-          <td>${inv.status}</td>
+          <td>${statusSpan}</td>
           <td>
             <a class="orangeBtn" href="invoiceDetails.html?id=${inv._id}">View Details</a>
             <a class="redBtn" href="#" onclick="deleteInvoice('${inv._id}')">Delete</a>

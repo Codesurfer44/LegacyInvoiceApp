@@ -1,4 +1,3 @@
-// Backend/server.js
 const mongoose = require('mongoose');
 const app = require('./app');
 

@@ -4,28 +4,15 @@
     border-radius: 4px;
     display: inline-block;
   }
+
+  #status {
+  margin: 1rem;
+  text-align: center;
+  color: #1a1a25;
+  text-shadow: 0 0 5px #2b2b2b;
+}
   
-  /* Existing statuses */
-  .status.Pending {
-    background-color: orange;
-    color: #1a1a25;
-  }
-  
-  .status.Sent {
-    background-color: #39ff14;
-    color: #1a1a25;
-  }
-  
-  /* Future statuses can be added easily 
-  
-  .status.Cancelled {
-    background-color: red;
-    color: #1a1a25;
-  }
-  
-  .status.Overdue {
-    background-color: #ff33ff;
-    color: #1a1a25;
-  }
-  
-  */
+.status.Pending { background: orange; color: #1a1a25; }
+.status.Paid { background: #fbff14; color: #1a1a25; }
+.status.Draft { background: #39ff14; color: #1a1a25; }
+.status.Sent { background: #d814ff; color: #1a1a25; }

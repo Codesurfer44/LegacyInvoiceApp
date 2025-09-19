@@ -17,7 +17,7 @@ const invoiceSchema = new mongoose.Schema({
   discount: { type: Number, default: 0 },
   total: { type: Number, default: 0 },
   currency: { type: String, default: 'USD' },
-  status: { type: String, enum: ['Pending', 'Paid', 'Draft'], default: 'Pending' },
+  status: { type: String, enum: ['Pending', 'Paid', 'Draft', 'Sent'], default: 'Pending' },
   invoiceDate: { type: Date, default: Date.now },
   dueDate: { type: Date },
   paymentMethod: { type: String, default: 'N/A' },

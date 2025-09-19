@@ -30,7 +30,6 @@ label {
 
 .terminal {
   margin-right: 270px;
-  background: rgba(0,0,0,0.95);
   border: 2px solid #ff33ff;
   padding: 1.5rem;  /* Reduced padding */
   width: 600px;
@@ -71,7 +70,6 @@ textarea {
 h1 {
   position: sticky;
   top: 0;
-  background: rgba(0,0,0,0.95); /* Match terminal background */
   padding: 1rem 0;
   margin: 0 0 1.5rem 0;
   z-index: 10;
@@ -89,15 +87,6 @@ h1 {
   width: 100%; /* Ensure form takes full width of terminal */
   padding-right: 5px; /* Small padding for scrollbar */
   box-sizing: border-box;
-}
-
-#status {
-  margin-top: 1rem;
-  font-size: 1rem;
-  min-height: 1.4rem;
-  text-align: center;
-  color: #39ff14;
-  text-shadow: 0 0 5px #39ff14;
 }
 
 .header-container {

@@ -14,7 +14,7 @@ const invoiceSchema = Joi.object({
   ).min(1).required(),
   tax: Joi.number().min(0).optional(),
   discount: Joi.number().min(0).optional(),
-  status: Joi.string().valid('Pending', 'Paid', 'Draft').optional(),
+  status: Joi.string().valid('Pending', 'Paid', 'Draft', 'Sent').optional(),
   currency: Joi.string().optional(),
   dueDate: Joi.date().optional(),
   paymentMethod: Joi.string().optional(),
