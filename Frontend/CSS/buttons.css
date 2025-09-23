@@ -53,6 +53,27 @@
   box-shadow: 0 0 10px #ff33ff, 0 0 10px #39ff14;
 }
 
+.removeItemBtn {
+  width: 20%;
+  padding: 1rem;
+  background: #ff33ff;
+  border: none;
+  color: #1a1a25;
+  font-family: 'Share Tech Mono', monospace;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1rem;
+  border-radius: 4px;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none; /* Removes underline */
+}
+
+.removeItemBtn:hover {
+  background: #39ff14;
+  color: #1a1a25;
+  box-shadow: 0 0 10px #ff33ff, 0 0 10px #39ff14;
+}
+
 .returnBtn {
     display: inline-block;
     margin-top: 15px;
