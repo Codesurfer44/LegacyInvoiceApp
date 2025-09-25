@@ -4,6 +4,8 @@ const path = require('path');
 const invoiceRoutes = require('./routes/invoices');
 
 const app = express();
+console.log(process.env.DATABASE_URL);
+
 
 // Middleware
 app.use(cors());
@@ -21,7 +23,9 @@ app.use((err, req, res, next) => {
     res.status(500).json({ error: 'Server error', message: err.message });
 });
 
-const PORT = process.env.PORT || 3000;
+require('dotenv').config();
+const PORT = process.env.PORT || 8080;
+
 app.listen(PORT, () => {
     console.log(`🚀 Server running at http://localhost:${PORT}`);
 });
