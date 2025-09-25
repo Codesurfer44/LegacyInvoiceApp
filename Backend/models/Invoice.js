@@ -74,10 +74,30 @@ class InvoiceModel {
     }
 
     async getLastNumber() {
-        const { rows } = await this.pool.query(
-            `SELECT MAX(CAST(invoiceNumber AS INTEGER)) as lastNumber FROM invoices`
-        );
-        return rows[0]?.lastnumber || 0;
+        try {
+            // Get the invoice number with the highest numeric suffix
+            const { rows } = await this.pool.query(`
+                SELECT invoiceNumber
+                FROM invoices
+                WHERE invoiceNumber ~ '^[A-Za-z]+[0-9]+$'
+                ORDER BY 
+                    CAST(REGEXP_REPLACE(invoiceNumber, '^[A-Za-z]+', '') AS INTEGER) DESC,
+                    createdAt DESC
+                LIMIT 1
+            `);
+            
+            if (rows.length === 0) {
+                return 0;
+            }
+            
+            // Extract the numeric part from the invoice number (e.g., "001" from "INV001")
+            const invoiceNumber = rows[0].invoicenumber;
+            const numericPart = invoiceNumber.replace(/^[A-Za-z]+/, '');
+            return parseInt(numericPart, 10) || 0;
+        } catch (error) {
+            console.error('Error in getLastNumber:', error);
+            return 0;
+        }
     }
 
     async delete(id) {
