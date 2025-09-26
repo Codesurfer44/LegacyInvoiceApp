@@ -2,10 +2,10 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const invoiceRoutes = require('./routes/invoices');
+const searchEngineRoutes = require('./routes/searchEngine');
 
 const app = express();
 console.log(process.env.DATABASE_URL);
-
 
 // Middleware
 app.use(cors());
@@ -13,6 +13,7 @@ app.use(express.json());
 
 // Routes
 app.use('/api/invoices', invoiceRoutes);
+app.use('/api/searchEngine', searchEngineRoutes);
 
 // Serve frontend (optional: if you want backend to also serve your HTML/JS)
 app.use(express.static(path.join(__dirname, '../Frontend')));
