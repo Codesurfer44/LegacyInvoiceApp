@@ -1,32 +1,31 @@
-const express = require('express');
-const cors = require('cors');
 const path = require('path');
-const invoiceRoutes = require('./routes/invoices');
-const searchEngineRoutes = require('./routes/searchEngine');
+const express = require('express');
+require('dotenv').config();
 
 const app = express();
-console.log(process.env.DATABASE_URL);
+const PORT = process.env.PORT || 8080;
+const HOST = process.env.HOST || '0.0.0.0';
 
-// Middleware
-app.use(cors());
 app.use(express.json());
 
-// Routes
+// Mount API routes before static if you prefer; both orders work when paths don’t collide
+const invoiceRoutes = require('./routes/invoices'); // we’ll add/replace this file next
+const searchRoutes = require('./routes/search'); // we’ll create this file next
 app.use('/api/invoices', invoiceRoutes);
-app.use('/api/searchEngine', searchEngineRoutes);
+app.use('/api', searchRoutes);
 
-// Serve frontend (optional: if you want backend to also serve your HTML/JS)
-app.use(express.static(path.join(__dirname, '../Frontend')));
+// Serve static frontend files
+app.use(express.static(path.join(__dirname, '..', 'Frontend')));
 
-// Error handler
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).json({ error: 'Server error', message: err.message });
+// Page routes
+app.get('/', (req, res) => {
+res.sendFile(path.join(__dirname, '..', 'Frontend', 'index.html'));
 });
 
-require('dotenv').config();
-const PORT = process.env.PORT || 8080;
+app.get('/invoiceDatabase', (req, res) => {
+res.sendFile(path.join(__dirname, '..', 'Frontend', 'invoiceDatabase.html'));
+});
 
-app.listen(PORT, () => {
-    console.log(`🚀 Server running at http://localhost:${PORT}`);
+app.listen(PORT, HOST, () => {
+console.log(🚀 Server running at http://${HOST}:${PORT});
 });
