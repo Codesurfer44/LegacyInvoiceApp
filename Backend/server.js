@@ -27,5 +27,5 @@ res.sendFile(path.join(__dirname, '..', 'Frontend', 'invoiceDatabase.html'));
 });
 
 app.listen(PORT, HOST, () => {
-console.log(🚀 Server running at http://${HOST}:${PORT});
+console.log(`🚀 Server running at http://${HOST}:${PORT}`);
 });
