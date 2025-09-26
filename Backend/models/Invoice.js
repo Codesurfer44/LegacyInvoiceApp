@@ -73,6 +73,28 @@ class InvoiceModel {
         return rows[0];
     }
 
+    async searchInvoices(query) {
+        if (!query || query.trim() === '') {
+            return await this.getAll();
+        }
+
+        const searchTerm = `%${query}%`;
+        const sql = `
+            SELECT * FROM invoices 
+            WHERE 
+                invoiceNumber ILIKE $1 OR
+                clientName ILIKE $1 OR
+                clientEmail ILIKE $1 OR
+                description ILIKE $1 OR
+                status ILIKE $1
+            ORDER BY createdAt DESC
+            LIMIT 100
+        `;
+        
+        const { rows } = await this.pool.query(sql, [searchTerm]);
+        return rows;
+    }
+
     async getLastNumber() {
         try {
             // Get the invoice number with the highest numeric suffix
